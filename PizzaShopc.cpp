@@ -1,7 +1,9 @@
 #include <iostream>
+#include <thread>
+#include<chrono>
 
 
-std::string toppings[]={"Tomatoes","Mushroom","Chicken"};
+std::string toppings[]={"Tomato","Mushroom","Chicken","pineapple","chocolate"};
 
 
 class Pizza{
@@ -31,30 +33,44 @@ void showOrder(int topno,int topbowl[]);
 void serveOrder(std::string top1);
 void serveOrder(std::string top1,std::string top2 );
 void serveOrder(std::string top1,std::string top2,std::string top3);
-
+void exitfunc();
+void orderStatus();
 
 
 int main()
     {
         char choice; 
-        std::system("clear");
-        std::cout<<"\n\n |........WELCOME TO PIZZA Shop..........|\n\n";
-        std::cout<<"\n What would you like to do sir ... \n";
-        std::cout<<"\n1.Order  2.Menu \n   3.leave";
-        std::cout<<"\n\nEnter your option ->YOU : ";
-        std::cin>>choice;
+        do 
+            {
+                std::system("clear");
+                std::cout<<"\n\n |........WELCOME TO PIZZA Shop..........|\n\n";
+                std::cout<<"\n What would you like to do sir ... \n";
+                std::cout<<"\n1.Order  2.Menu \n   3.leave";
+                std::cout<<"\n\nEnter your option ->YOU : ";
+                std::cin>>choice;
 
-        switch(choice){
-            case '1':
-                placeOrder();
-                break;
-            case '2':
-                showmenu();
-                break;
-            case '3':
-                Greetings(1);
-                break;
-        }
+                switch(choice){
+                    case '1':
+                        std::system("clear");
+                        placeOrder();
+                        exitfunc();
+                        break;
+                    case '2':
+                        std::system("clear");
+                        showmenu();
+                        exitfunc();
+                        break;
+                    case '3':
+                        std::system("clear");
+                        Greetings(1);
+                        exitfunc();
+                        break;
+                    default:
+                        std::system("clear");
+                        std::cout<<"\n\n...Please Select a Valid service ....!\n\n";
+                        exitfunc();
+                }
+            }while(choice!='3');
 
     } 
 
@@ -71,6 +87,7 @@ void placeOrder()
     {
 
                 int noofToppings;
+                std::cout<<"\n\n        |..........Pizza Counter............|\n\n";
                 std::cout<<"\nPlease enter no of Toppings you want(1 or 2 or 3) :";
                 std::cin>>noofToppings;
                 int* toppingsBowl=new int[noofToppings];
@@ -80,6 +97,8 @@ void placeOrder()
                     std::cin>>toppingsBowl[i];
                     
                 }
+                orderStatus();
+                // std::this_thread::sleep_for(std::chrono::seconds(2));
                 showOrder(noofToppings,toppingsBowl);
                 delete[] toppingsBowl;
     }
@@ -94,6 +113,9 @@ void Greetings(int a)
 
 void showOrder(int topno,int topbowl[])
     {
+
+        std::system("clear");
+        std::cout<<"\n\n        |..........Pizza Counter............|\n\n";
         switch(topno){
             case 1:
                 {
@@ -113,6 +135,9 @@ void showOrder(int topno,int topbowl[])
                 serveOrder(pizza1.topping1,pizza1.topping2,pizza1.topping3);
                 break;
                 }
+            default:
+                std::cout<<"\n\n!!-----Sorry sir pizza with "<<topno<<" toppings cannot be provided\n  We are SORRY for disappointing you sir....!!\n\n";
+                break;
         }
     }
 void serveOrder(std::string top1)
@@ -155,4 +180,32 @@ void serveOrder(std::string top1,std::string top2,std::string top3)
             {
                 std::cout<<"\n\n!...Your "<<top1<<" "<<top2<<" "<<top3<<" Pizza is REady ...!";
             }
+    }
+
+void exitfunc()
+    {
+        char exitchar;
+        do{
+        std::cout<<"\n\nPress x to exit :";
+        std::cin>>exitchar;
+        }while(exitchar!='x');
+    }
+void orderStatus()
+    {
+        std::system("clear");
+        std::cout<<"\n\nYour order has been placed Successfully...\n\n";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout<<"\nMaking Fresh Dough\n.\n.\n.";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout<<"\nPreparing Special Toppings  \n.\n.\n.";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout<<"\nBaking Fresh pizza in oven  \n.\n.\n.";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout<<"\nPacking Your PIZZA  !\n.\n.\n.";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        std::cout<<"\nShow your hand ! \n\n\n";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+
+
+        // std::system("clear");
     }
